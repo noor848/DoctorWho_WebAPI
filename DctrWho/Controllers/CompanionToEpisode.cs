@@ -20,7 +20,7 @@ namespace DoctorWho.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("/CompanionToEpisode/InsertCompanionEpisodData")]
+        [HttpPost("/CompanionToEpisode")]
         [ProducesResponseType(200)]
         [ProducesResponseType(204)]
         public IActionResult InsertEnemyEpisodData(int CompanionId, int EpisodId)

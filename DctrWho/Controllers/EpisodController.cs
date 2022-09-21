@@ -18,7 +18,7 @@ namespace DoctorWho.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("/Episod/CreateEpisodes")]
+        [HttpPost("/Episod/Episodes",Name = "CreateEpisodes")]
         public int CreateEpisodes(EpisodDto Episod,[FromQuery]int AuthorId,[FromQuery]int DoctorId)
         {
             var EpisodData = _mapper.Map<Episod>(Episod);
@@ -32,7 +32,7 @@ namespace DoctorWho.Controllers
            return 0;
         }
 
-        [HttpGet("/Episod/GetAllEpisods")]
+        [HttpGet("/Episod/Episods", Name = "GetAllEpisods")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Episod>))]
         public IActionResult GetAllEpisods()
         {

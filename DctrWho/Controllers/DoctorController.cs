@@ -20,7 +20,7 @@ namespace DoctorWho.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("/Doctor/GetAllDoctors")]
+        [HttpGet("Doctors/", Name = "GetAllDoctors")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Doctor>))]
         public IActionResult GetAllDoctors()
         {
@@ -33,7 +33,7 @@ namespace DoctorWho.Controllers
             return Ok(Doctors);
         }
 
-        [HttpDelete("/Doctor/DeleteDoctor/")]
+        [HttpDelete("Doctors/", Name = "DeleteDoctors")]
         [ProducesResponseType(200)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
@@ -51,7 +51,7 @@ namespace DoctorWho.Controllers
                  return NotFound();
         }
 
-        [HttpPost("Doctor/UpsertDoctor")]
+        [HttpPost("Doctors/",Name = "UpsertDoctors")]
         public DoctorDto UpsertDoctors([FromBody] DoctorDto doctor)
         {
             var Doctors = _mapper.Map<List<DoctorDto>>(_DoctorRepositry.GetAllDoctors()).Find(s=>s.Id == doctor.Id);

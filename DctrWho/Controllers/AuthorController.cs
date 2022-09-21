@@ -18,7 +18,7 @@ namespace DoctorWho.Controllers
             _mapper = mapper;
         }
 
-        [HttpPut("/Author/UpdateAuthorName/")]
+        [HttpPut("/Author/authorName/")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Doctor>))]
         public IActionResult UpdateAuthorName(int AuthorId,string AuthorName)
         {
