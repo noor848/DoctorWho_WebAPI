@@ -13,6 +13,6 @@ namespace DoctorWho.Db.Interface
         public void DeleteEnemy(int id);
         public Enemy GetEnemyById(int id);
         public void updateEnemyData(Enemy enemy);
-        public void GetEnemiesNameProcedure();
+        public void GetEnemyProcedure();
     }
 }

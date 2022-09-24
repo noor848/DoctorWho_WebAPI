@@ -61,10 +61,10 @@ namespace DoctorWho.Db.Repositories
             return _context.Doctors.FirstOrDefault(s => s.Id ==id);
         }
 
-        public void GetDoctorNameFunction(int id)
+        public void GetDoctorNameFunction(int DoctorId)
         {
-            var response = _context.DoctorViews.FromSqlRaw($"select * from  GetDoctorname({id})").ToList().FirstOrDefault();
-            Console.WriteLine($"Doctor Name has Id ={id} is {response.DoctorName}");
+            var response = _context.DoctorViews.FromSqlRaw($"select * from  GetDoctor({DoctorId})").ToList().FirstOrDefault();
+            Console.WriteLine($"Doctor Name has Id ={DoctorId} is {response.DoctorName}");
         }
 
         public void PrintDoctorsNamesView()
