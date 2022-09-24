@@ -51,6 +51,14 @@ namespace DoctorWho.Db.Repositories
         {
             return _context.Enemys.Find(id);
         }
-
+        public void GetEnemiesNameProcedure()
+        {
+            var EnemyNameList = _context.Enemys.FromSqlRaw("EXECUTE GetEnemiesName").ToList();
+            foreach (var enemy in EnemyNameList)
+            {
+                Console.Write($"Enemy's Name {enemy.Id}: {enemy.EnemyName}, ");
+            }
+            Console.WriteLine("");
+        }
     }
 }

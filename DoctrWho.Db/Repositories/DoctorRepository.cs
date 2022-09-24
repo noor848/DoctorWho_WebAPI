@@ -1,6 +1,7 @@
 ﻿using DoctorWho.Db.Interface;
 using EFCore;
 using EfDoctorWho;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,5 +61,22 @@ namespace DoctorWho.Db.Repositories
             return _context.Doctors.FirstOrDefault(s => s.Id ==id);
         }
 
+        public void GetDoctorNameFunction(int id)
+        {
+            var response = _context.DoctorViews.FromSqlRaw($"select * from  GetDoctorname({id})").ToList().FirstOrDefault();
+            Console.WriteLine($"Doctor Name has Id ={id} is {response.DoctorName}");
+        }
+
+        public void PrintDoctorsNamesView()
+        {
+            var NameList = _context.DoctorViews.ToList();
+
+            foreach (var name in NameList)
+            {
+                Console.Write($"Doctor's Name {name.Id}: {name.DoctorName}, ");
+            }
+            Console.WriteLine("");
+
+        }
     }
 }

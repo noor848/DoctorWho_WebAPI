@@ -9,6 +9,9 @@ namespace DoctorWho.Db.Interface
         public bool DeleteDoctor(int id);
         public ICollection<Doctor> GetAllDoctors();
         public Doctor GetDoctorById(int id);
+        public void GetDoctorNameFunction(int id);
+        public void PrintDoctorsNamesView();
+
 
     }
 }

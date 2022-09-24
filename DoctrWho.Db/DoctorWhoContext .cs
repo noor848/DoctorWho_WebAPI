@@ -20,6 +20,7 @@ namespace EFCore
         {
             modelBuilder.Entity<EnemyEpisod>().HasKey(s => new { s.EpisodId,s.EnemyId });
             modelBuilder.Entity<CompanionEpisod>().HasKey(s => new { s.EpisodId,s.CompanionId });
+
         }
 
         public DbSet<Enemy> Enemys { get; set; }
@@ -30,6 +31,5 @@ namespace EFCore
         public DbSet<EnemyEpisod> EnemyEpisods { get; set; }
         public DbSet<CompanionEpisod> CompanionEpisods { get; set; }
         public DbSet<DoctorView> DoctorViews { get; set; }
-
     }
 }
