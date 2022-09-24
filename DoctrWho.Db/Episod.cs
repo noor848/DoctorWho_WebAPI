@@ -15,10 +15,10 @@ namespace EfDoctorWho
         public string Title { get; set; }
         public DateTime EpisodDate { get; set; }
         public string Notes { get; set; }
-        public ICollection<Companion> TblCompanion { get; set; }
-        public ICollection<Enemy> TblEnemy { get; set; }
-        public Doctor tblDoctor { get; set;  }
-        public Author tblAuthor { get; set; }
+        public ICollection<Companion> Companion { get; set; }
+        public ICollection<Enemy> Enemy { get; set; }
+        public Doctor Doctor { get; set;  }
+        public Author Author { get; set; }
 
     }
 }

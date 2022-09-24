@@ -8,8 +8,8 @@ namespace DoctorWho.Db
 {
     public class CompanionEpisod
     {
-        public int TblCompanionId;
-        public int TblEpisodId;
+        public int CompanionId;
+        public int EpisodId;
 
     }
 }

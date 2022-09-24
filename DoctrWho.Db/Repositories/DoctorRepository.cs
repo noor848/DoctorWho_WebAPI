@@ -11,14 +11,14 @@ namespace DoctorWho.Db.Repositories
 {
     public class DoctorssRepository:IDoctor
     {
-        public  ApplicationContext _context;
-        public DoctorssRepository(ApplicationContext context)
+        public  DoctorWhoContext _context;
+        public DoctorssRepository(DoctorWhoContext context)
         {
             _context = context;
         }
         public void CreateDoctor(Doctor DoctorTable)
         {
-            _context.tblDoctors.Add(DoctorTable);
+            _context.Doctors.Add(DoctorTable);
             _context.SaveChanges();
         }
         public void updateDoctorData(Doctor DoctorTable)
@@ -47,7 +47,7 @@ namespace DoctorWho.Db.Repositories
         }
         public ICollection<Doctor> GetAllDoctors()
         {
-            return _context.tblDoctors.Select(s => s).ToList();   
+            return _context.Doctors.Select(s => s).ToList();   
         }
         public bool Save()
         {
@@ -57,7 +57,7 @@ namespace DoctorWho.Db.Repositories
 
         public Doctor GetDoctorById(int id)
         {
-            return _context.tblDoctors.FirstOrDefault(s => s.Id ==id);
+            return _context.Doctors.FirstOrDefault(s => s.Id ==id);
         }
 
     }

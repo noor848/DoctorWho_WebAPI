@@ -7,8 +7,8 @@ namespace DoctorWho.validation
     {
         public EpisodValidator()
         {
-            RuleFor(episod => episod.tblAuthor).NotNull();
-            RuleFor(episod => episod.tblDoctor).NotNull();
+            RuleFor(episod => episod.Author).NotNull();
+            RuleFor(episod => episod.Doctor).NotNull();
             RuleFor(episod => episod.SeriesNumber).Length(10);
             RuleFor(episod => episod.EpisodNumber).GreaterThan(0);
         }

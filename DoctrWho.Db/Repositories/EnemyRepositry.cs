@@ -12,14 +12,14 @@ namespace DoctorWho.Db.Repositories
 {
     public class EnemyRepositry: IEnemy
     {
-        private readonly ApplicationContext _context;
-        public EnemyRepositry(ApplicationContext context)
+        private readonly DoctorWhoContext _context;
+        public EnemyRepositry(DoctorWhoContext context)
         {
             _context = context;
         }
         public void CreateEnemy(string description, string EnemyName)
         {
-            _context.tblEnemys.Add(new EfDoctorWho.Enemy
+            _context.Enemys.Add(new EfDoctorWho.Enemy
             {
                 Description = description,
                 EnemyName = EnemyName,
@@ -37,9 +37,19 @@ namespace DoctorWho.Db.Repositories
             }
         }
 
+        public void updateEnemyData(Enemy enemy)
+        {
+            var Enemy = GetEnemyById(enemy.Id);
+
+            Enemy.Description = enemy.Description;
+            Enemy.EnemyName=enemy.EnemyName;
+
+            _context.SaveChanges();
+        }
+
         public Enemy GetEnemyById(int id)
         {
-            return _context.tblEnemys.Find(id);
+            return _context.Enemys.Find(id);
         }
 
     }

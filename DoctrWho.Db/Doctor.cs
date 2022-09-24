@@ -15,7 +15,7 @@ namespace EfDoctorWho
         public DateTime BirthDate { get; set; }
         public DateTime FirstEpisodDate { get; set; }
         public DateTime LastEpisodDate { get; set; }
-        public ICollection<Episod> TblEpisod { get; set; }
+        public ICollection<Episod> Episod { get; set; }
     }
 }
 

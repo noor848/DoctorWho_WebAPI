@@ -11,17 +11,17 @@ namespace DoctorWho.Db.Repositories
 {
     public class AuthorRepository : lAuthor
     {
-        private readonly  ApplicationContext _context;
-        public AuthorRepository(ApplicationContext context)
+        private readonly  DoctorWhoContext _context;
+        public AuthorRepository(DoctorWhoContext context)
         {
             _context = context;
         }
 
         public  void CreateAuthor(string AuthorName)
         {
-            if (AuthorName != null)
+            if (!string.IsNullOrEmpty(AuthorName))
             {
-                _context.tblAuthors.Add(new EfDoctorWho.Author
+                _context.Authors.Add(new EfDoctorWho.Author
                 {
                     AuthorName = AuthorName
                 });
@@ -54,7 +54,7 @@ namespace DoctorWho.Db.Repositories
 
         public Author GetAuthorById(int id)
         {
-            return _context.tblAuthors.Find(id);
+            return _context.Authors.Find(id);
         }
 
     }

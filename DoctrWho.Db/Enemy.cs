@@ -11,6 +11,6 @@ namespace EfDoctorWho
         public int Id { get; set; }
         public string EnemyName { get; set; }
         public string Description { get; set; }
-        public ICollection<Episod> TblEpisod { get; set; }
+        public ICollection<Episod> Episod { get; set; }
     }
 }

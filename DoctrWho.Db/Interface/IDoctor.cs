@@ -1,9 +1,4 @@
 ﻿using EfDoctorWho;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DoctorWho.Db.Interface
 {
@@ -13,5 +8,7 @@ namespace DoctorWho.Db.Interface
         public void updateDoctorData(Doctor DoctorTable);
         public bool DeleteDoctor(int id);
         public ICollection<Doctor> GetAllDoctors();
+        public Doctor GetDoctorById(int id);
+
     }
 }

@@ -9,8 +9,8 @@ namespace DoctorWho.Db
 {
     public class EnemyEpisod
     {
-        public int TblEnemyId;
-        public int TblEpisodId;
+        public int EnemyId;
+        public int EpisodId;
 
     }
 }

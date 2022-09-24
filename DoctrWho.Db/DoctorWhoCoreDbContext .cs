@@ -9,26 +9,27 @@ using System.Threading.Tasks;
 
 namespace EFCore
 {
-    public class ApplicationContext : DbContext
+    public class DoctorWhoContext : DbContext
     {
-        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
+        public DoctorWhoContext(DbContextOptions<DoctorWhoContext> options) : base(options)
         {
 
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<EnemyEpisod>().HasKey(s => new { s.TblEpisodId,s.TblEnemyId });
-            modelBuilder.Entity<CompanionEpisod>().HasKey(s => new { s.TblEpisodId,s.TblCompanionId });
+            modelBuilder.Entity<EnemyEpisod>().HasKey(s => new { s.EpisodId,s.EnemyId });
+            modelBuilder.Entity<CompanionEpisod>().HasKey(s => new { s.EpisodId,s.CompanionId });
         }
 
-        public DbSet<Enemy> tblEnemys { get; set; }
-        public DbSet<Author> tblAuthors { get; set; }
-        public DbSet<Companion> tblCompanions { get; set; }
-        public DbSet<Doctor> tblDoctors { get; set; }
-        public DbSet<Episod> tblEpisods { get; set; }
-        public DbSet<EnemyEpisod> tblEnemytblEpisods { get; set; }
-        public DbSet<CompanionEpisod> tblCompaniontblEpisods { get; set; }
+        public DbSet<Enemy> Enemys { get; set; }
+        public DbSet<Author> Authors { get; set; }
+        public DbSet<Companion> Companions { get; set; }
+        public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<Episod> Episods { get; set; }
+        public DbSet<EnemyEpisod> EnemyEpisods { get; set; }
+        public DbSet<CompanionEpisod> CompanionEpisods { get; set; }
+        public DbSet<DoctorView> DoctorViews { get; set; }
 
     }
 }

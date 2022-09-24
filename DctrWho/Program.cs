@@ -21,7 +21,7 @@ builder.Services.AddScoped<ICompanionToEpisode, CompanionEpisodRepositry>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<ApplicationContext>(options => {
+builder.Services.AddDbContext<DoctorWhoContext>(options => {
 
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
