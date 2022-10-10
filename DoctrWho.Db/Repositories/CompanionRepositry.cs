@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DoctorWho.Db.Repositories
 {
-    public class CompanionRepositry: ICompanion
+    public class CompanionRepositry: ICompanionRepository
     {
         private readonly  DoctorWhoContext _context;
         public CompanionRepositry(DoctorWhoContext context)

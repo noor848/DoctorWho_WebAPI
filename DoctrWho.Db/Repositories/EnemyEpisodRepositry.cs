@@ -4,7 +4,7 @@ using EFCore;
 
 namespace DoctorWho.Db.Repositories
 {
-    public class EnemytblEpisodRepositry : IEnemyToEpisode
+    public class EnemytblEpisodRepositry : IEnemyToEpisodeRepository
     {
         private readonly DoctorWhoContext _context;
         public EnemytblEpisodRepositry(DoctorWhoContext context)

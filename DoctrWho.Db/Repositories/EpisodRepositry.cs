@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DoctorWho.Db.Repositories
 {
-    public class EpisodRepositry:IEpisod
+    public class EpisodRepositry: IEpisodRepository
     {
         private readonly DoctorWhoContext _context;
         public EpisodRepositry(DoctorWhoContext context)
@@ -22,8 +22,7 @@ namespace DoctorWho.Db.Repositories
             var Doctor = GetDoctor(DoctorId);
 
 
-            _context.Episods.Add(
-                new EfDoctorWho.Episod
+            _context.Episods.Add(new EfDoctorWho.Episod
             {
                Id=episod.Id,
                EpisodNumber = episod.EpisodNumber,  
@@ -39,7 +38,7 @@ namespace DoctorWho.Db.Repositories
             return Save();
         }
 
-        public Doctor GetDoctor(int DoctorId)
+        public  Doctor GetDoctor(int DoctorId)
         {
             return _context.Doctors.Where(o => o.Id== DoctorId).FirstOrDefault();
         }

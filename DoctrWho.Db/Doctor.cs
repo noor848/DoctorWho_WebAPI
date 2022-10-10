@@ -1,4 +1,7 @@
-﻿using System;
+﻿using AutoMapper;
+using AutoMapper.Configuration.Annotations;
+using DoctorWho.Db.Repositories;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,9 +11,10 @@ using System.Threading.Tasks;
 
 namespace EfDoctorWho
 {
+    [AutoMap(typeof(Doctor))]
     public class Doctor
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string DoctorName { get; set; }
         public int DoctorNumber { get; set; }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DoctorWho.Db.Repositories
 {
-    public class AuthorRepository : lAuthor
+    public class AuthorRepository : lAuthorRepository
     {
         private readonly  DoctorWhoContext _context;
         public AuthorRepository(DoctorWhoContext context)

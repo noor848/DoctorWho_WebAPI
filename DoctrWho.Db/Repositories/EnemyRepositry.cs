@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DoctorWho.Db.Repositories
 {
-    public class EnemyRepositry: IEnemy
+    public class EnemyRepositry: IEnemyRepository
     {
         private readonly DoctorWhoContext _context;
         public EnemyRepositry(DoctorWhoContext context)

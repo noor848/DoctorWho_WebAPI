@@ -10,24 +10,24 @@ using System.Threading.Tasks;
 
 namespace DoctorWho.Db.Repositories
 {
-    public class DoctorssRepository:IDoctor
+    public class DoctorssRepository: IDoctorRepository
     {
         public  DoctorWhoContext _context;
         public DoctorssRepository(DoctorWhoContext context)
         {
             _context = context;
         }
-        public void CreateDoctor(Doctor DoctorTable)
+        public  void CreateDoctor(Doctor DoctorTable)
         {
-            _context.Doctors.Add(DoctorTable);
+             _context.Doctors.Add(DoctorTable);
             _context.SaveChanges();
         }
         public void updateDoctorData(Doctor DoctorTable)
         {
-                var Doctor = GetDoctorById(DoctorTable.Id);
+                var Doctor =  GetDoctorByNumber(DoctorTable.DoctorNumber);
                           
                 Doctor.DoctorName = DoctorTable.DoctorName;
-                Doctor.Id = DoctorTable.Id;
+               // Doctor.Id = DoctorTable.Id;
                 Doctor.DoctorNumber = DoctorTable.DoctorNumber;
                 Doctor.BirthDate = DoctorTable.BirthDate;
                 Doctor.FirstEpisodDate = DoctorTable.FirstEpisodDate;
@@ -46,9 +46,9 @@ namespace DoctorWho.Db.Repositories
             }
             return Save();
         }
-        public ICollection<Doctor> GetAllDoctors()
+        public async Task<IEnumerable<Doctor>> GetAllDoctors()
         {
-            return _context.Doctors.Select(s => s).ToList();   
+            return await _context.Doctors.Select(s => s).ToListAsync();   
         }
         public bool Save()
         {
@@ -56,9 +56,13 @@ namespace DoctorWho.Db.Repositories
             return saved > 0 ? true : false;
         }
 
+        public Doctor GetDoctorByNumber(int DoctorNum)
+        {
+            return _context.Doctors.FirstOrDefault(s => s.DoctorNumber == DoctorNum);
+        }
         public Doctor GetDoctorById(int id)
         {
-            return _context.Doctors.FirstOrDefault(s => s.Id ==id);
+            return _context.Doctors.FirstOrDefault(s => s.DoctorNumber == id);
         }
 
         public void GetDoctorNameFunction(int DoctorId)
@@ -75,8 +79,11 @@ namespace DoctorWho.Db.Repositories
             {
                 Console.Write($"Doctor's Name {name.Id}: {name.DoctorName}, ");
             }
-            Console.WriteLine("");
+      
 
         }
+
+               
+
     }
 }
