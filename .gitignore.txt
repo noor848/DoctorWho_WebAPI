@@ -1,1 +1,1 @@
-bin/Debug
+DoctorWho.Web/DoctorWho.Web/bin/Debug
