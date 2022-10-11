@@ -21,11 +21,11 @@ namespace DoctorWho.Controllers
         }
 
         [HttpGet("Doctors/", Name = "GetAllDoctors")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Doctor>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<EfDoctorWho.Doctor>))]
         public async Task<IActionResult> GetAllDoctors()
         {
             var listDoctor = await _DoctorRepositry.GetAllDoctors();
-            var Doctors = _mapper.Map<List<DoctorDto>>(listDoctor);
+            var Doctors = _mapper.Map<List<Dto.Doctord>>(listDoctor);
 
             if (!ModelState.IsValid)
             {
@@ -54,19 +54,19 @@ namespace DoctorWho.Controllers
         }
 
         [HttpPost("Doctors/", Name = "UpsertDoctors")]
-        public async Task<DoctorDto> UpsertDoctors([FromBody] DoctorDto doctor)
+        public async Task<Dto.Doctord> UpsertDoctors([FromBody] Dto.Doctord doctor)
         {
             var Doctors= await _DoctorRepositry.GetDoctorByNumber(doctor.DoctorNumber);
            
             if (Doctors != null)
             {
-                var doctordata = _mapper.Map<Doctor>(doctor);
+                var doctordata = _mapper.Map<EfDoctorWho.Doctor>(doctor);
 
                 _DoctorRepositry.updateDoctorData(doctordata);
             }
             else
             {
-                var doctordata = _mapper.Map<Doctor>(doctor);
+                var doctordata = _mapper.Map<EfDoctorWho.Doctor>(doctor);
                  _DoctorRepositry.CreateDoctor(doctordata);
                 Console.WriteLine(doctordata.LastEpisodDate.ToString("MM-dd-yyyy"));
             }
