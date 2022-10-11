@@ -1,6 +1,7 @@
 ﻿using DoctorWho.Db.Interface;
 using EFCore;
 using EfDoctorWho;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,13 +17,13 @@ namespace DoctorWho.Db.Repositories
         {
             _context = context;
         }
-        public bool CreateEpisodes(Episod episod,int AuthorId, int DoctorId)
+        public async Task<bool> CreateEpisodes(Episod episod,int AuthorId, int DoctorId)
         {
-            var Author = GetAuthor(AuthorId);
-            var Doctor = GetDoctor(DoctorId);
+            var Author = await GetAuthor(AuthorId);
+            var Doctor = await  GetDoctor(DoctorId);
 
 
-            _context.Episods.Add(new EfDoctorWho.Episod
+            await _context.Episods.AddAsync(new Episod
             {
                Id=episod.Id,
                EpisodNumber = episod.EpisodNumber,  
@@ -35,26 +36,26 @@ namespace DoctorWho.Db.Repositories
                Doctor= Doctor
 
                 });
-            return Save();
+            return await Save();
         }
 
-        public  Doctor GetDoctor(int DoctorId)
+        public async Task<Doctor> GetDoctor(int DoctorId)
         {
-            return _context.Doctors.Where(o => o.Id== DoctorId).FirstOrDefault();
+            return await _context.Doctors.Where(o => o.Id == DoctorId).FirstAsync();
         }
-        public Author GetAuthor(int AuthorId)
+        public async Task<Author> GetAuthor(int AuthorId)
         {
-            return _context.Authors.Where(o => o.Id == AuthorId).FirstOrDefault();
-        }
-
-        public Episod GetEpisodById(int id)
-        {
-            return _context.Episods.FirstOrDefault(s => s.Id == id);
+            return  await _context.Authors.Where(o => o.Id == AuthorId).FirstAsync();
         }
 
-        public void DeleteEpisod(int id) 
+        public async  Task <Episod> GetEpisodById(int id)
         {
-                var Episod = GetEpisodById(id);
+            return  await _context.Episods.Where(s => s.Id == id).FirstAsync();
+        }
+
+        public async void DeleteEpisod(int id) 
+        {
+                var Episod = await GetEpisodById(id);
                 if (Episod != null)
                 {
                 _context.Remove(Episod);
@@ -62,21 +63,22 @@ namespace DoctorWho.Db.Repositories
                 }
         }
 
-        public ICollection<Episod> GetAllEpisods()
+        public async Task<ICollection<Episod>> GetAllEpisods()
         {
-            return _context.Episods.Select(s => s).ToList();
+            return await _context.Episods.Select(s => s).ToListAsync();
 
         }
 
-        public bool Save()
+        public async Task<bool> Save()
         {
-            var saved = _context.SaveChanges();
+            var saved = await _context.SaveChangesAsync();
             return saved > 0 ? true : false;
         }
 
-        public int GetLastIdEpisod()
+        public async Task<int>GetLastIdEpisod()
         {
-            return _context.Episods.Find(_context.Episods.Max(s=>s.Id)).Id;
+             var EpisodId = await  _context.Episods.FindAsync(_context.Episods.Max(s => s.Id));
+            return EpisodId.Id;
         }
 
 

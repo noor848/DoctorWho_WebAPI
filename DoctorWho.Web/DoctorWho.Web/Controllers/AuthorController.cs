@@ -22,7 +22,7 @@ namespace DoctorWho.Controllers
         [ProducesResponseType(200, Type = typeof(IEnumerable<Doctor>))]
         public async Task<IActionResult> UpdateAuthorName(int AuthorId,string AuthorName)
         {
-            var Author =  _AuthorRepositry.updateAuthorName(AuthorId, AuthorName);
+            var Author = await _AuthorRepositry.updateAuthorName(AuthorId, AuthorName);
             if (Author)
             {
                 return Ok();

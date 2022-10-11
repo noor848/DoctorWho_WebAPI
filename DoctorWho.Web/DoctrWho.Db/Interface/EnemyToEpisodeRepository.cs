@@ -8,9 +8,9 @@ namespace DoctorWho.Db.Interface
 {
     public interface IEnemyToEpisodeRepository
     {
-        public bool InsertEnemyEpisodData(int EnemyId, int EpisodId);
-        bool DeleteEnemyEpisodData(int EnemyId, int EpisodId);
-        bool UpdateEnemyEpisodData(int EnemyId, int EpisodId);
-        EnemyEpisod GetEnemyEpisod(int EnemyId, int EpisodId);
+        public Task<bool> InsertEnemyEpisodData(int EnemyId, int EpisodId);
+        Task<bool> DeleteEnemyEpisodData(int EnemyId, int EpisodId);
+        Task<bool> UpdateEnemyEpisodData(int EnemyId, int EpisodId);
+        Task<EnemyEpisod> GetEnemyEpisod(int EnemyId, int EpisodId);
     }
 }

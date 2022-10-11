@@ -21,9 +21,10 @@ namespace DoctorWho.Controllers
         [HttpPost("/Enemy/{EnemyId}/Episod/{EpisodId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(204)]
-        public IActionResult InsertEnemyEpisodData(int EnemyId, int EpisodId)
+        public async Task<IActionResult> InsertEnemyEpisodData(int EnemyId, int EpisodId)
         {
-           if(_EnemyToEpisodeRepositry.InsertEnemyEpisodData(EnemyId, EpisodId))
+            var EnemyEpisod = await _EnemyToEpisodeRepositry.InsertEnemyEpisodData(EnemyId, EpisodId);
+           if (EnemyEpisod)
              {
                 return Ok();
             }

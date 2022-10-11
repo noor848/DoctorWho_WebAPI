@@ -2,6 +2,7 @@
 using DoctrWho.Db.Interface;
 using EFCore;
 using EfDoctorWho;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,52 +18,52 @@ namespace DoctorWho.Db.Repositories
         {
             _context = context;
         }
-        public bool InsertCompanionEpisodData(int CompanionId, int EpisodId)
+        public async Task<bool> InsertCompanionEpisodData(int CompanionId, int EpisodId)
         {
-            _context.AddRange(
+           await _context.AddRangeAsync(
                 new CompanionEpisod
                 {
                     CompanionId = CompanionId,
                     EpisodId = EpisodId
                 }
                 );
-            return Save();
+            return await Save();
         }
 
 
-        public bool DeleteCompanionEpisodData(int CompanionId, int EpisodId)
+        public async Task<bool> DeleteCompanionEpisodData(int CompanionId, int EpisodId)
         {
-            _context.Remove(
+             _context.Remove(
                 new CompanionEpisod
             {
                 CompanionId = CompanionId,
                 EpisodId = EpisodId
             });
-            return Save();
+            return await Save();
         }
 
 
-        public bool UpdateCompanionEpisodData(int CompanionId, int EpisodId)
+        public async Task<bool> UpdateCompanionEpisodData(int CompanionId, int EpisodId)
         {
 
-            var CompanionEpisods = GetCompanionEpisod(CompanionId,EpisodId);
+            var CompanionEpisods = await GetCompanionEpisod(CompanionId,EpisodId);
 
             CompanionEpisods.EpisodId = EpisodId;
             CompanionEpisods.CompanionId = CompanionId;
 
-            return Save();
+            return await Save();
         }
 
-        public CompanionEpisod GetCompanionEpisod(int CompanionId, int EpisodId)
+        public async Task<CompanionEpisod> GetCompanionEpisod(int CompanionId, int EpisodId)
         {
-            return _context.CompanionEpisods.SingleOrDefault
+            return await _context.CompanionEpisods.SingleOrDefaultAsync 
                 (b => b.EpisodId == EpisodId && b.CompanionId == CompanionId);
         }
 
 
-        public bool Save()
+        public async Task<bool> Save()
         {
-            var saved = _context.SaveChanges();
+            var saved = await _context.SaveChangesAsync();
             return saved > 0 ? true : false;
         }
     }

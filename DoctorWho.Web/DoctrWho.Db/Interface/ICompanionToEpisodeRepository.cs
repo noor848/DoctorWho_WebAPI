@@ -9,9 +9,9 @@ namespace DoctrWho.Db.Interface
 {
     public interface ICompanionToEpisodeRepository
     {
-       public bool InsertCompanionEpisodData(int EnemyId, int EpisodId);
-        public CompanionEpisod GetCompanionEpisod(int CompanionId, int EpisodId);
-        public bool DeleteCompanionEpisodData(int CompanionId, int EpisodId);
-        bool UpdateCompanionEpisodData(int CompanionId, int EpisodId);
+       public Task<bool> InsertCompanionEpisodData(int EnemyId, int EpisodId);
+        public Task<CompanionEpisod> GetCompanionEpisod(int CompanionId, int EpisodId);
+        public Task<bool> DeleteCompanionEpisodData(int CompanionId, int EpisodId);
+        Task<bool> UpdateCompanionEpisodData(int CompanionId, int EpisodId);
     }
 }

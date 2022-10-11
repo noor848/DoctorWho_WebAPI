@@ -17,44 +17,44 @@ namespace DoctorWho.Db.Repositories
             _context = context;
         }
 
-        public  void CreateAuthor(string AuthorName)
+        public async  void CreateAuthor(string AuthorName)
         {
             if (!string.IsNullOrEmpty(AuthorName))
             {
-                _context.Authors.Add(new EfDoctorWho.Author
+                await _context.Authors.AddAsync (new EfDoctorWho.Author
                 {
                     AuthorName = AuthorName
                 });
-                _context.SaveChanges();
+                 _context.SaveChanges();
             }
 
         }
 
-        public  bool updateAuthorName(int id, string AuthorName)
+        public async  Task<bool> updateAuthorName(int id, string AuthorName)
         {
-            var Author = GetAuthorById(id);
+            var Author = await GetAuthorById(id);
             Author.AuthorName = AuthorName;
-            return Save();
+            return await Save();
         }
 
-        public  void DeleteAuthor(int id)
+        public async  void DeleteAuthor(int id)
         {
-            var Author = GetAuthorById(id);
+            var Author = await GetAuthorById(id);
             if (Author != null)
             {
-                _context.Remove(Author);
+                 _context.Remove(Author);
                 _context.SaveChanges();
             }
         }
-        public bool Save()
+        public async Task<bool> Save()
         {
-            var saved = _context.SaveChanges();
+            var saved = await _context.SaveChangesAsync();
             return saved > 0 ? true : false;
         }
 
-        public Author GetAuthorById(int id)
+        public async Task<Author> GetAuthorById(int id)
         {
-            return _context.Authors.Find(id);
+            return await _context.Authors.FindAsync(id);
         }
 
     }

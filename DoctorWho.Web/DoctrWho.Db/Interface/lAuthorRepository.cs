@@ -10,9 +10,9 @@ namespace DoctorWho.Db.Interface
     public interface lAuthorRepository
     {
         public void CreateAuthor(string AuthorName);
-        public bool updateAuthorName(int id,string AuthorName);
+        public Task<bool> updateAuthorName(int id,string AuthorName);
         public  void DeleteAuthor(int id);
-        public Author GetAuthorById(int id);
+        public Task<Author> GetAuthorById(int id);
 
     }
 }

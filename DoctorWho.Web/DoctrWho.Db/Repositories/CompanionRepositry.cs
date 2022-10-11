@@ -1,6 +1,7 @@
 ﻿using DoctorWho.Db.Interface;
 using EFCore;
 using EfDoctorWho;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +18,9 @@ namespace DoctorWho.Db.Repositories
             _context = context;
         }
      
-        public  void CreateCompanion(string ComapnionName, string WhoPlayed)
+        public async  void CreateCompanion(string ComapnionName, string WhoPlayed)
         {
-            _context.Companions.Add(new Companion
+            await _context.Companions.AddAsync(new Companion
             {
                 ComapnionName = ComapnionName,
                 WhoPlayed = WhoPlayed
@@ -27,24 +28,24 @@ namespace DoctorWho.Db.Repositories
             _context.SaveChanges();
         }
 
-        public void UpdateCompanion(int CompanionId , string CompanionName)
+        public async void UpdateCompanion(int CompanionId , string CompanionName)
         {
 
-            var Companion = GetCompanion(CompanionId);
+            var Companion = await GetCompanion(CompanionId);
 
             Companion.ComapnionName= CompanionName;
     
             _context.SaveChanges();
         }
 
-        public Companion GetCompanion(int CompanionId)
+        public async Task<Companion> GetCompanion(int CompanionId)
         {
-            return _context.Companions.SingleOrDefault(b=>b.Id==CompanionId);
+            return await _context.Companions.FirstAsync(b => b.Id == CompanionId);
         }
 
-        public void DeleteComapnion(int CompanionId)
+        public async void DeleteComapnion(int CompanionId)
         {
-            var Companon = GetCompanion(CompanionId);
+            var Companon = await GetCompanion(CompanionId);
             if (Companon != null)
             {
                 _context.Remove(Companon);

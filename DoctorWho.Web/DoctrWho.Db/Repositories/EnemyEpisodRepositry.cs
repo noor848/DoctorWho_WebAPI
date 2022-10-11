@@ -1,6 +1,6 @@
 ﻿using DoctorWho.Db.Interface;
 using EFCore;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace DoctorWho.Db.Repositories
 {
@@ -11,19 +11,19 @@ namespace DoctorWho.Db.Repositories
         {
             _context = context;
         }
-        public  bool InsertEnemyEpisodData(int EnemyId,int EpisodId)
+        public  async Task<bool> InsertEnemyEpisodData(int EnemyId,int EpisodId)
         {
-            _context.AddRange(
+           await  _context.AddRangeAsync(
                 new EnemyEpisod{
                     
                         EnemyId = EnemyId,
                         EpisodId = EpisodId
                 }
                 );
-            return Save();
+            return await Save();
         }
 
-        public bool DeleteEnemyEpisodData(int EnemyId, int EpisodId)
+        public async Task<bool> DeleteEnemyEpisodData(int EnemyId, int EpisodId)
         {
             _context.Remove(
                 new EnemyEpisod
@@ -31,29 +31,28 @@ namespace DoctorWho.Db.Repositories
                     EnemyId = EnemyId,
                     EpisodId = EpisodId
                 });
-            return Save();
+            return await Save();
         }
 
 
-        public bool UpdateEnemyEpisodData(int EnemyId, int EpisodId)
+        public  async Task<bool> UpdateEnemyEpisodData(int EnemyId, int EpisodId)
         {
-
-            var EnemyEpisods = GetEnemyEpisod(EnemyId, EpisodId);
-
+            var EnemyEpisods =  await GetEnemyEpisod(EnemyId, EpisodId);
             EnemyEpisods.EpisodId = EpisodId;
             EnemyEpisods.EnemyId = EnemyId;
 
-            return Save();
+            return await Save();
         }
 
-        public EnemyEpisod GetEnemyEpisod(int EnemyId, int EpisodId)
+        public async Task<EnemyEpisod> GetEnemyEpisod(int EnemyId, int EpisodId)
         {
-            return _context.EnemyEpisods.SingleOrDefault
-                (b => b.EpisodId == EpisodId && b.EnemyId == EnemyId);
+            return await _context.EnemyEpisods.
+                Where(b => b.EpisodId == EpisodId && b.EnemyId == EnemyId).
+                SingleOrDefaultAsync();
         }
-        public bool Save()
+        public async Task<bool> Save()
         {
-            var saved = _context.SaveChanges();
+            var saved = await _context.SaveChangesAsync();
             return saved > 0 ? true : false;
         }
     }

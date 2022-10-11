@@ -25,7 +25,8 @@ namespace DoctorWho.Controllers
         [ProducesResponseType(204)]
         public async Task<IActionResult> InsertEnemyEpisodData(int CompanionId, int EpisodId)
         {
-           if(_CompanionToEpisodeRepositry.InsertCompanionEpisodData(CompanionId, EpisodId))
+            var EpisodEnemy = await _CompanionToEpisodeRepositry.InsertCompanionEpisodData(CompanionId, EpisodId);
+           if (EpisodEnemy)
              {
                 return Ok();
             }

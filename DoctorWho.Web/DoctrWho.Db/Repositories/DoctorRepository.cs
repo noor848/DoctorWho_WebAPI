@@ -17,14 +17,14 @@ namespace DoctorWho.Db.Repositories
         {
             _context = context;
         }
-        public  void CreateDoctor(Doctor DoctorTable)
+        public  async void CreateDoctor(Doctor DoctorTable)
         {
-             _context.Doctors.Add(DoctorTable);
+             await _context.Doctors.AddAsync(DoctorTable);
             _context.SaveChanges();
         }
-        public void updateDoctorData(Doctor DoctorTable)
+        public async void updateDoctorData(Doctor DoctorTable)
         {
-                var Doctor =  GetDoctorByNumber(DoctorTable.DoctorNumber);
+                var Doctor = await  GetDoctorByNumber(DoctorTable.DoctorNumber);
                           
                 Doctor.DoctorName = DoctorTable.DoctorName;
                // Doctor.Id = DoctorTable.Id;
@@ -35,9 +35,9 @@ namespace DoctorWho.Db.Repositories
 
                 _context.SaveChanges();
         }
-        public bool DeleteDoctor(int id)
+        public async Task<bool> DeleteDoctor(int id)
         {
-            var Doctor = GetDoctorById(id);
+            var Doctor = await GetDoctorById(id);
 
             if (Doctor != null)
             {
@@ -56,24 +56,24 @@ namespace DoctorWho.Db.Repositories
             return saved > 0 ? true : false;
         }
 
-        public Doctor GetDoctorByNumber(int DoctorNum)
+        public  async Task<Doctor> GetDoctorByNumber(int DoctorNum)
         {
-            return _context.Doctors.FirstOrDefault(s => s.DoctorNumber == DoctorNum);
+            return await _context.Doctors.FirstAsync(s => s.DoctorNumber == DoctorNum);
         }
-        public Doctor GetDoctorById(int id)
+        public async  Task<Doctor> GetDoctorById(int id)
         {
-            return _context.Doctors.FirstOrDefault(s => s.DoctorNumber == id);
+            return await _context.Doctors.FirstAsync(s => s.DoctorNumber == id);
         }
 
-        public void GetDoctorNameFunction(int DoctorId)
+        public async void GetDoctorNameFunction(int DoctorId)
         {
-            var response = _context.DoctorViews.FromSqlRaw($"select * from  GetDoctor({DoctorId})").ToList().FirstOrDefault();
+            var response = await _context.DoctorViews.FromSqlRaw($"select * from  GetDoctor({DoctorId})").FirstAsync();
             Console.WriteLine($"Doctor Name has Id ={DoctorId} is {response.DoctorName}");
         }
 
-        public void PrintDoctorsNamesView()
+        public async void PrintDoctorsNamesView()
         {
-            var NameList = _context.DoctorViews.ToList();
+            var NameList = await _context.DoctorViews.ToListAsync();
 
             foreach (var name in NameList)
             {

@@ -17,9 +17,9 @@ namespace DoctorWho.Db.Repositories
         {
             _context = context;
         }
-        public void CreateEnemy(string description, string EnemyName)
+        public async void CreateEnemy(string description, string EnemyName)
         {
-            _context.Enemys.Add(new EfDoctorWho.Enemy
+            await _context.Enemys.AddAsync(new Enemy
             {
                 Description = description,
                 EnemyName = EnemyName,
@@ -27,9 +27,9 @@ namespace DoctorWho.Db.Repositories
             _context.SaveChanges();
         }
  
-        public void DeleteEnemy(int id)
+        public async void DeleteEnemy(int id)
         {
-            var Enemy = GetEnemyById(id);
+            var Enemy = await GetEnemyById(id);
             if (Enemy != null)
             {
                 _context.Remove(Enemy);
@@ -37,9 +37,9 @@ namespace DoctorWho.Db.Repositories
             }
         }
 
-        public void updateEnemyData(Enemy enemy)
+        public async void updateEnemyData(Enemy enemy)
         {
-            var Enemy = GetEnemyById(enemy.Id);
+            var Enemy = await GetEnemyById(enemy.Id);
 
             Enemy.Description = enemy.Description;
             Enemy.EnemyName=enemy.EnemyName;
@@ -47,13 +47,13 @@ namespace DoctorWho.Db.Repositories
             _context.SaveChanges();
         }
 
-        public Enemy GetEnemyById(int id)
+        public async Task<Enemy> GetEnemyById(int id)
         {
-            return _context.Enemys.Find(id);
+            return await _context.Enemys.FindAsync(id);
         }
-        public void GetEnemyProcedure()
+        public async void GetEnemyProcedure()
         {
-            var EnemyNameList = _context.Enemys.FromSqlRaw("EXECUTE GetEnemiesName").ToList();
+            var EnemyNameList = await _context.Enemys.FromSqlRaw("EXECUTE GetEnemiesName").ToListAsync();
             foreach (var enemy in EnemyNameList)
             {
                 Console.Write($"Enemy's Name {enemy.Id}: {enemy.EnemyName}, ");

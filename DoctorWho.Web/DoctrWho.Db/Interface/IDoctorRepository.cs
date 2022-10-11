@@ -7,12 +7,12 @@ namespace DoctorWho.Db.Interface
     {
         public void CreateDoctor(Doctor DoctorTable);
         public void updateDoctorData(Doctor DoctorTable);
-        public bool DeleteDoctor(int id);
+        public Task<bool> DeleteDoctor(int id);
         public Task<IEnumerable<Doctor>> GetAllDoctors();
-        public Doctor GetDoctorById(int id);
+        public Task<Doctor> GetDoctorById(int id);
         public void GetDoctorNameFunction(int id);
         public void PrintDoctorsNamesView();
-        public Doctor GetDoctorByNumber(int DoctorNum);
+        public Task<Doctor> GetDoctorByNumber(int DoctorNum);
 
 
     }

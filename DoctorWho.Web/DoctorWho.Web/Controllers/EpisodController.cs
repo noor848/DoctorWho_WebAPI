@@ -19,14 +19,14 @@ namespace DoctorWho.Controllers
         }
 
         [HttpPost("/Episod",Name = "CreateEpisodes")]
-        public int CreateEpisodes(EpisodDto Episod,int AuthorId,int DoctorId)
+        public async  Task<int> CreateEpisodes(EpisodDto Episod,int AuthorId,int DoctorId)
         {
             var EpisodData = _mapper.Map<Episod>(Episod);
-            var createEpisod = _EpisodRepositry.CreateEpisodes(EpisodData, AuthorId, DoctorId);
+            var createEpisod = await _EpisodRepositry.CreateEpisodes(EpisodData, AuthorId, DoctorId);
 
             if (createEpisod)
             {
-                return _EpisodRepositry.GetLastIdEpisod();
+                return await _EpisodRepositry.GetLastIdEpisod();
             }
 
            return 0;

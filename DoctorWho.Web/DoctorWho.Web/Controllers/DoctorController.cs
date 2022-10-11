@@ -38,9 +38,10 @@ namespace DoctorWho.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult DeleteDoctors(int id)
+        public async Task<IActionResult> DeleteDoctors(int id)
         {
-            if (_DoctorRepositry.DeleteDoctor(id))
+            bool DoctorId =await _DoctorRepositry.DeleteDoctor(id);
+            if (DoctorId)
             {
                 return Ok();
             }
@@ -53,11 +54,9 @@ namespace DoctorWho.Controllers
         }
 
         [HttpPost("Doctors/", Name = "UpsertDoctors")]
-        public DoctorDto UpsertDoctors([FromBody] DoctorDto doctor)
+        public async Task<DoctorDto> UpsertDoctors([FromBody] DoctorDto doctor)
         {
-           /// var DoctorList = _DoctorRepositry.GetAllDoctors();
-           // var Doctors = _mapper.Map<List<DoctorDto>>(DoctorList);
-            var Doctors=_DoctorRepositry.GetDoctorByNumber(doctor.DoctorNumber);
+            var Doctors= await _DoctorRepositry.GetDoctorByNumber(doctor.DoctorNumber);
            
             if (Doctors != null)
             {
@@ -68,16 +67,12 @@ namespace DoctorWho.Controllers
             else
             {
                 var doctordata = _mapper.Map<Doctor>(doctor);
-                _DoctorRepositry.CreateDoctor(doctordata);
+                 _DoctorRepositry.CreateDoctor(doctordata);
                 Console.WriteLine(doctordata.LastEpisodDate.ToString("MM-dd-yyyy"));
             }
 
             return doctor;
         }
-
-        /* var DoctorList =  _DoctorRepositry.GetDoctorByNumber(doctor.DoctorNumber);
-
-             var Doctors = _mapper.Map<List<DoctorDto>>(DoctorList);*/
 
     }
 }
