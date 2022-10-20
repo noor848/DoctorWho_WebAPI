@@ -3,6 +3,9 @@ using EfDoctorWho;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using DoctorWho.Dto;
+using DoctorWho.validation;
+using System.ComponentModel.DataAnnotations;
+using FluentValidation;
 
 namespace DoctorWho.Controllers
 {
@@ -19,11 +22,10 @@ namespace DoctorWho.Controllers
         }
 
         [HttpPost("/Episod",Name = "CreateEpisodes")]
-        public async  Task<int> CreateEpisodes(Dto.Episodd Episod,int AuthorId,int DoctorId)
+        public async  Task<int> CreateEpisodes(Episodd Episod,int AuthorId,int DoctorId)
         {
-            var EpisodData = _mapper.Map<EfDoctorWho.Episod>(Episod);
+            var EpisodData = _mapper.Map<Episod>(Episod);
             var createEpisod = await _EpisodRepositry.CreateEpisodes(EpisodData, AuthorId, DoctorId);
-
             if (createEpisod)
             {
                 return await _EpisodRepositry.GetLastIdEpisod();
@@ -33,10 +35,10 @@ namespace DoctorWho.Controllers
         }
 
         [HttpGet("/Episod", Name = "GetAllEpisods")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<EfDoctorWho.Episod>))]
-        public IActionResult GetAllEpisods()
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Episodd>))]
+        public async Task<IActionResult> GetAllEpisods()
         {
-            var Episods = _EpisodRepositry.GetAllEpisods();
+            var Episods = await _EpisodRepositry.GetAllEpisods();
 
             if (!ModelState.IsValid)
             {

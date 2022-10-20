@@ -5,6 +5,9 @@ using EfDoctorWho;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using EFCore;
+using FluentValidation.Results;
+using DoctorWho.validation;
+using FluentValidation;
 
 namespace DoctorWho.Controllers
 {
@@ -21,11 +24,11 @@ namespace DoctorWho.Controllers
         }
 
         [HttpGet("Doctors/", Name = "GetAllDoctors")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<EfDoctorWho.Doctor>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Doctord>))]
         public async Task<IActionResult> GetAllDoctors()
         {
             var listDoctor = await _DoctorRepositry.GetAllDoctors();
-            var Doctors = _mapper.Map<List<Dto.Doctord>>(listDoctor);
+            var Doctors = _mapper.Map<List<Doctord>>(listDoctor);
 
             if (!ModelState.IsValid)
             {
@@ -54,25 +57,42 @@ namespace DoctorWho.Controllers
         }
 
         [HttpPost("Doctors/", Name = "UpsertDoctors")]
-        public async Task<Dto.Doctord> UpsertDoctors([FromBody] Dto.Doctord doctor)
+        public async Task<Doctord> UpsertDoctors([FromBody]Doctord doctor)
         {
+
             var Doctors= await _DoctorRepositry.GetDoctorByNumber(doctor.DoctorNumber);
-           
             if (Doctors != null)
             {
-                var doctordata = _mapper.Map<EfDoctorWho.Doctor>(doctor);
+                DoctorValidator doctorValidiate = new DoctorValidator();
+                var result = doctorValidiate.Validate(Doctors);
 
-                _DoctorRepositry.updateDoctorData(doctordata);
+                if (result.IsValid)
+                {
+                    var doctordata = _mapper.Map<Doctor>(doctor);
+                await _DoctorRepositry.updateDoctorData(doctordata);
+                }
+
             }
             else
             {
-                var doctordata = _mapper.Map<EfDoctorWho.Doctor>(doctor);
-                 _DoctorRepositry.CreateDoctor(doctordata);
-                Console.WriteLine(doctordata.LastEpisodDate.ToString("MM-dd-yyyy"));
+                var doctordata = _mapper.Map<Doctor>(doctor);
+               DoctorValidator doctorValidiate = new DoctorValidator();
+                var result = doctorValidiate.Validate(doctordata);
+                if (result.IsValid)
+                {
+                    _DoctorRepositry.CreateDoctor(doctordata);
+
+              }
             }
 
             return doctor;
         }
+       /* public ValidationResult ValidateDoctor(Doctor Doctors)
+        {
+            DoctorValidator doctorValidiate = new DoctorValidator();
+            return doctorValidiate.Validate(Doctors);
+        }
+        */
 
     }
 }

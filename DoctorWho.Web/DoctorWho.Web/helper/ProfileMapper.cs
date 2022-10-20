@@ -8,16 +8,16 @@ namespace DoctorWho.helper
     {
         public ProfileMapper()
         {
-            CreateMap<Author,Author>();
-            CreateMap<Author,Author>();
-            CreateMap<Companion,Companion>();
-            CreateMap<Companion,Companion>();
-            CreateMap<Doctor,Doctor>();
-            CreateMap<Doctor,Doctor>();
-            CreateMap<Enemy,Enemy>();
-            CreateMap<Enemy,Enemy>();
-            CreateMap<Episod,Episod>();
-            CreateMap<Episod,Episod>();
+            CreateMap<Author,Authord>();
+            CreateMap<Authord,Author>();
+            CreateMap<Companiond,Companion>();
+            CreateMap<Companion,Companiond>();
+            CreateMap<Doctord,Doctor>();
+            CreateMap<Doctor,Doctord>();
+            CreateMap<Enemyd,Enemy>();
+            CreateMap<Enemy,Enemyd>();
+            CreateMap<Episodd,Episod>();
+            CreateMap<Episod,Episodd>();
         }
     }
 }

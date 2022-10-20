@@ -1,4 +1,5 @@
 ﻿using DoctorWho.Db.Interface;
+using DoctorWho.validation;
 using EFCore;
 using EfDoctorWho;
 using Microsoft.EntityFrameworkCore;
@@ -21,22 +22,31 @@ namespace DoctorWho.Db.Repositories
         {
             var Author = await GetAuthor(AuthorId);
             var Doctor = await  GetDoctor(DoctorId);
-
-
-            await _context.Episods.AddAsync(new Episod
+            var validator = new EpisodValidator();
+            var EpisodData = new Episod
             {
-               Id=episod.Id,
-               EpisodNumber = episod.EpisodNumber,  
-               EpisodDate = episod.EpisodDate,  
-               EpisodType = episod.EpisodType,  
-               Notes = episod.Notes,
-               SeriesNumber = episod.SeriesNumber,
-               Title = episod.Title,
-               Author=Author,
-               Doctor= Doctor
+                Id = episod.Id,
+                EpisodNumber = episod.EpisodNumber,
+                EpisodDate = episod.EpisodDate,
+                EpisodType = episod.EpisodType,
+                Notes = episod.Notes,
+                SeriesNumber = episod.SeriesNumber,
+                Title = episod.Title,
+                Author = Author,
+                Doctor = Doctor
 
-                });
-            return await Save();
+            };
+            var result = validator.Validate(EpisodData);
+
+            if (result.IsValid)
+            {
+                Console.WriteLine("valos");
+                await _context.Episods.AddAsync(EpisodData);
+                _context.SaveChanges();
+                return true;
+            }
+
+            return false;
         }
 
         public async Task<Doctor> GetDoctor(int DoctorId)
